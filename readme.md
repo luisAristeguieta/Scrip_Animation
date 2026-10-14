@@ -1,10 +1,13 @@
-# 🎮 2D Platformer: Movement, Animation & Extended Camera System
+# 🎮 2D Platformer: Movement, Animation, Extended Camera & AI Patrol System
 
-Este repositorio contiene los módulos y scripts de control físico, ciclo de animaciones 2D y el sistema de seguimiento de cámara sobre un nivel extendido con Tilemaps en Unity.
+Este repositorio contiene los módulos y scripts de control físico, ciclo de animaciones 2D, seguimiento de cámara sobre niveles extendidos y el sistema de inteligencia artificial autónomo para enemigos patrulleros en Unity.
 
 ---
 
-## 📸 Vista General y Arquitectura del Nivel
+## 📸 Vista General y Demostración en Vivo
+
+### Demostración de Enemigos Patrulleros y Sensores (Taller 5)
+![Demostración Taller 5](Entregable/Taller_5.gif)
 
 ### Recorrido y Diseño del Nivel (Gameplay)
 ![Vista del Nivel](Entregable/Vista2.PNG)
@@ -14,10 +17,25 @@ Este repositorio contiene los módulos y scripts de control físico, ciclo de an
 
 ---
 
-## 📹 Video Demostrativo
+## 📹 Videos Demostrativos
 
-Puedes consultar el recorrido completo y el comportamiento dinámico de la cámara en el siguiente enlace:
-🔗 **[Ver Video Demostrativo (Google Drive)](https://drive.google.com/file/d/1RtJQNFs8sYJJmL7QVIqkWBqUuMEpf9uO/view)**
+- 🔗 **[Ver Video Demostrativo - Taller 5: Enemigos Patrulleros y Prefabs (Google Drive)](https://drive.google.com/file/d/1vRvUh9a14Pi8t7uVJwAq61Tg9kCLIbPN/view)**
+- 🔗 **[Ver Video Demostrativo - Taller 4: Cámara Suave y Nivel Extendido (Google Drive)](https://drive.google.com/file/d/1RtJQNFs8sYJJmL7QVIqkWBqUuMEpf9uO/view)**
+
+---
+
+## 👾 Taller 5: Creación de Enemigo Patrullero Inteligente y Prefabs
+
+En esta fase se implementó un sistema de patrullaje autónomo para enemigos con sensores físicos 2D y modularización mediante Prefabs:
+
+- **Configuración del Enemigo Base (`Enemigo_Patrulla`):**
+  - **Componentes Físicos:** `SpriteRenderer`, `BoxCollider2D` y `Rigidbody2D` con restricción activa de rotación (**`Freeze Rotation Z`**) para prevenir giros accidentales por fricción o contacto lateral.
+  - **Objeto Hijo Detector (`GroundCheck`):** Sensor posicionado estratégicamente al frente y en la base del enemigo para anticipar vacíos y colisiones frontales.
+- **Sensores de Física 2D (`RaycastHit2D`):**
+  - **Detección de Vacíos:** Rayo vertical hacia abajo (`Vector2.down`) filtrado por la máscara `LayerMask (Ground)`. Si deja de detectar suelo (`isGroundAhead.collider == null`), activa la inversión de marcha.
+  - **Detección de Muros:** Rayo horizontal orientado en la dirección de avance (`Vector2.right` o `Vector2.left`). Al contactar una superficie sólida (`isWallAhead.collider != null`), activa el cambio de dirección.
+- **Sistema de Volteo Dinámico (`Flip`):** Inversión de escala horizontal (`transform.localScale.x *= -1`), reorientando de manera automática el detector hijo `GroundCheck` hacia el nuevo frente.
+- **Plantilla Reutilizable (Prefab):** Creación del Prefab modular en `Assets/Prefabs`, permitiendo poblar múltiples plataformas del nivel con instancias independientes.
 
 ---
 
